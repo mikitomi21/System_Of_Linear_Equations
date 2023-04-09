@@ -1,11 +1,20 @@
+import math
+
 class Matrix:
     a1 = 13
     a2 = a3 = -1
+    f = 8
     def __init__(self, m, n=1):
         self.m = m
         self.n = n
-        self.mat = self.create_matrix()
+        self.mat = self.create()
     
+    def create(self):
+        if self.n == self.m:
+            return self.create_matrix()
+        if self.n == 1:
+            return self.create_vector()
+
     def create_matrix(self):
         matrix = []
         for m in range(self.m):
@@ -21,6 +30,14 @@ class Matrix:
                     matrix_temp.append(0)
             matrix.append(matrix_temp)
         return matrix
+    
+    def create_vector(self):
+        vector = []
+        for _ in range(self.m - 1):
+            vector.append([0])
+        vector.append([math.sin(self.n*(self.f+1))])
+        return vector
+
     
     def __str__(self):
         return str(self.mat)

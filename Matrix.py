@@ -53,7 +53,7 @@ class Matrix:
         if self.n != other.m:
             return
         print(self.m)
-        new_mat = []
+        mat = []
         for m in range(self.m):
             row = []
             for k in range(other.n):
@@ -61,6 +61,18 @@ class Matrix:
                 for n in range(self.n):
                     sum += self.mat[m][n] * other.mat[n][k]
                 row.append(sum)
-            new_mat.append(row)
+            mat.append(row)
 
-        return new_mat
+        return mat
+
+    def solve(self, vector):
+        solution = [vector.mat[0][0]/self.mat[0][0]]
+
+        for i in range(1,self.m):
+            sum = 0
+            for j in range(self.n, i-1):
+                sum+=self.mat[i][j]*solution[j]
+            solution.append((vector.mat[i][0]-sum)/self.mat[i][i])
+
+        return solution
+

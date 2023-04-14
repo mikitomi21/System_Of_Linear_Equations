@@ -4,7 +4,10 @@ N_TEST = 5
 
 A = Matrix(N_TEST,N_TEST)
 print(A)
+B = Matrix(N_TEST,N_TEST)
+print(A)
 
 b = Matrix(N_TEST)
 print(b)
+print(A*b)
 

@@ -16,3 +16,15 @@ def jacobi(A, b, threshold=pow(10,-9), max_iter=1000):
             return x
 
     return x
+
+def gauss(A, b, threshold=pow(10,-9), max_iter=1000):
+    D = A.diag()
+    L = A.tril()
+    U = A.triu()
+
+    x = Matrix(b.m, 1, [[0] for _ in range(b.m)])
+    for iteration in range(max_iter):
+        x = (D-L).solve(U*x)+(D-L).solve(b)
+        if all(abs(x.mat[i][0]) >= threshold for i in range(A.m)):
+            return x
+    return x

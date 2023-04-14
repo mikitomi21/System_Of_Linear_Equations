@@ -6,10 +6,15 @@ class Matrix:
     a2 = a3 = -1
     f = 8
 
-    def __init__(self, m, n=1):
+    def __init__(self, m, n=1, mat=None):
         self.m = m
         self.n = n
-        self.mat = self.create()
+
+        if mat:
+            self.mat = mat
+        else:
+            self.mat = self.create()
+
 
     def create(self):
         if self.n == self.m:
@@ -66,13 +71,15 @@ class Matrix:
         return mat
 
     def solve(self, vector):
-        solution = [vector.mat[0][0]/self.mat[0][0]]
+        solution = [[vector.mat[0][0] / self.mat[0][0]]]
 
-        for i in range(1,self.m):
+        for i in range(1, self.m):
             sum = 0
-            for j in range(self.n, i-1):
-                sum+=self.mat[i][j]*solution[j]
-            solution.append((vector.mat[i][0]-sum)/self.mat[i][i])
+            for j in range(self.n, i - 1):
+                sum += self.mat[i][j] * solution[j]
+            solution.append([(vector.mat[i][0] - sum) / self.mat[i][i]])
 
-        return solution
+        return Matrix(vector.m, vector.n, solution)
 
+    def __copy__(self):
+        return Matrix(self.m, self.n, self.mat)

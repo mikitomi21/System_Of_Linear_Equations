@@ -7,4 +7,7 @@ B = Matrix(N_TEST,N_TEST)
 
 b = Matrix(N_TEST)
 print(b)
-print(A.solve(b))
+b = A.solve(b)
+print(b)
+b = A.solve(b)
+print(b)

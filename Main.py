@@ -1,13 +1,10 @@
 from Matrix import Matrix
+from Methods import jacobi
 N = 988
-N_TEST = 5
+N_TEST = 6
 
 A = Matrix(N_TEST,N_TEST)
-B = Matrix(N_TEST,N_TEST)
-
 b = Matrix(N_TEST)
-print(b)
-b = A.solve(b)
-print(b)
-b = A.solve(b)
-print(b)
+jacobi(A, b)
+
+

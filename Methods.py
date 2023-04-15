@@ -8,8 +8,8 @@ def jacobi(A, b, threshold=pow(10,-9), max_iter=1000):
     x = Matrix(b.m, 1, [[0] for _ in range(b.m)])
     comp1 = (L + U)
     for iteration in range(max_iter):
-        test3 = comp1*x+b
-        x = D.solve2(test3)
+        comp2 = comp1*x+b
+        x = D.solve2(comp2)
         res = A*x - b
         if all(abs(res.mat[i][0]) <= threshold for i in range(A.m)):
             print(f"jacobi: {iteration}")
@@ -27,14 +27,19 @@ def gauss(A, b, threshold=pow(10,-9), max_iter=1000):
 
     x = Matrix(b.m, 1, [[0] for _ in range(b.m)])
     for iteration in range(max_iter):
-        print(x)
-        x_new = (D-L).solve(U*x,x)+(D-L).solve(b,x)
-        x = x_new.copy()
+        for i in range(A.m):
+            m1 = Matrix(1, L.n, [L.mat[i]])
+            s1 = m1*x
+            m2 = Matrix(1, U.n, [U.mat[i]])
+            s2 = m2*x
+            x.mat[i][0] = (b.mat[i][0]-s1.mat[0][0]-s2.mat[0][0])/A.mat[i][i]
         res = A * x - b
+        print(res)
         if all(abs(res.mat[i][0]) <= threshold for i in range(A.m)):
             print(f"gauss: {iteration}")
+            print(f"res={res}")
             return x
 
     print(f"gauss: {iteration}")
-    print(res)
+    print(f"res={res}")
     return x

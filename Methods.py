@@ -40,3 +40,8 @@ def gauss(A, b, threshold=pow(10,-9), max_iter=1000):
 
     print(f"gauss: {max_iter}")
     return x
+
+def factLU(A, b, threshold=pow(10,-9), max_iter=1000):
+    L, U = A.fact_LU()
+    print(f"L={L}")
+    print(f"U={U}")

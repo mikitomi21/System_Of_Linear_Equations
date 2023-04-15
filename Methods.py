@@ -13,11 +13,10 @@ def jacobi(A, b, threshold=pow(10,-9), max_iter=1000):
         res = A*x - b
         if all(abs(res.mat[i][0]) <= threshold for i in range(A.m)):
             print(f"jacobi: {iteration}")
-            print(f"res={res}")
+            #print(f"res={res}")
             return x
 
-    print(f"jacobi: {iteration}")
-    print(f"res={res}")
+    print(f"jacobi: {max_iter}")
     return x
 
 def gauss(A, b, threshold=pow(10,-9), max_iter=1000):
@@ -34,12 +33,10 @@ def gauss(A, b, threshold=pow(10,-9), max_iter=1000):
             s2 = m2*x
             x.mat[i][0] = (b.mat[i][0]-s1.mat[0][0]-s2.mat[0][0])/A.mat[i][i]
         res = A * x - b
-        print(res)
         if all(abs(res.mat[i][0]) <= threshold for i in range(A.m)):
             print(f"gauss: {iteration}")
-            print(f"res={res}")
+            #print(f"res={res}")
             return x
 
-    print(f"gauss: {iteration}")
-    print(f"res={res}")
+    print(f"gauss: {max_iter}")
     return x

@@ -49,22 +49,31 @@ class Matrix:
         return str(self.mat)
 
     def __add__(self, other):
+        matrix = []
         for m in range(self.m):
+            new_matrix = []
             for n in range(self.n):
-                self.mat[m][n] += other.mat[m][n]
-        return Matrix(self.m, self.n,self.mat)
+                new_matrix.append(self.mat[m][n]+other.mat[m][n])
+            matrix.append(new_matrix)
+        return Matrix(self.m, self.n, matrix)
 
     def __sub__(self, other):
+        matrix = []
         for m in range(self.m):
+            new_matrix = []
             for n in range(self.n):
-                self.mat[m][n] -= other.mat[m][n]
-        return Matrix(self.m, self.n,self.mat)
+                new_matrix.append(self.mat[m][n] - other.mat[m][n])
+            matrix.append(new_matrix)
+        return Matrix(self.m, self.n, matrix)
 
     def __abs__(self):
+        matrix = []
         for m in range(self.m):
+            new_matrix = []
             for n in range(self.n):
-                self.mat[m][n] = abs(self.mat[m][n])
-        return Matrix(self.m, self.n,self.mat)
+                new_matrix.append(abs(self.mat[m][n]))
+            matrix.append(new_matrix)
+        return Matrix(self.m, self.n, matrix)
 
     def __mul__(self, other):
         if self.n != other.m:
@@ -81,6 +90,11 @@ class Matrix:
 
         return Matrix(self.m, other.n, mat)
 
+    def minus(self):
+        for m in range(self.m):
+            for n in range(self.n):
+                self.mat[m][n] = -1*self.mat[m][n]
+        return Matrix(self.m, self.n, self.mat)
     def matmax(self):
         max_val = float('-inf')
         for m in range(self.m):
@@ -89,16 +103,29 @@ class Matrix:
                     max_val = abs(self.mat[m][n])
         return max_val
 
-    def solve(self, vector):
-        solution = [[vector.mat[0][0] / self.mat[0][0]]]
-
+    def solve(self, b, x):
+        solution = []
         for i in range(1, self.m):
             sum = 0
-            for j in range(self.n, i - 1):
-                sum += self.mat[i][j] * solution[j][0]
-            solution.append([(vector.mat[i][0] - sum) / self.mat[i][i]])
+            for j in range(self.n, i):
+                sum += self.mat[i][j] * x.math[j][0]
+            solution.append([(b.mat[i][0] - sum) / self.mat[i][i]])
 
-        return Matrix(vector.m, vector.n, solution)
+        return Matrix(b.m, b.n, solution)
+
+    def solve2(self,mat2):
+        matrix = []
+        for m in range(self.m):
+            matrix_temp = []
+            for n in range(self.n):
+                if m==n:
+                    matrix_temp.append(1/self.mat[m][n])
+                else:
+                    matrix_temp.append(0)
+            matrix.append(matrix_temp)
+        mat1 = Matrix(self.m, self.n, matrix)
+
+        return mat1*mat2
 
     def copy(self):
         return Matrix(self.m, self.n, self.mat)

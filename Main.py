@@ -68,21 +68,15 @@ for N in [100,500,1000,2000,3000]:
 
         # FactLU method
         start = time.time()
-        x = factLU(A, b, THRESHOLD, MAX_ITERATION)
+        x = factLU(A, b, THRESHOLD)
         end = time.time()
         print(f"factLU time:{end - start}")
 
 '''
-N_TEST = 100
+N_TEST = 1000
 A = Matrix(N_TEST,N_TEST)
 b = Matrix(N_TEST)
 
 start = time.time()
-x = factLUCho(A, b, THRESHOLD, MAX_ITERATION)
+x = factLUCho(A, b, THRESHOLD)
 end = time.time()
-print(f"factLUCho time:{end - start}")
-
-start = time.time()
-x = factLU(A, b, THRESHOLD, MAX_ITERATION)
-end = time.time()
-print(f"factLU time:{end - start}")

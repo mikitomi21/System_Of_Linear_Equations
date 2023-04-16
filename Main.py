@@ -1,5 +1,5 @@
 from Matrix import Matrix
-from Methods import jacobi, gauss, factLU
+from Methods import jacobi, gauss, factLU, factLUCho
 import time
 
 #N = 988
@@ -50,10 +50,10 @@ x = gauss(A, b, THRESHOLD, MAX_ITERATION)
 print(x)
 '''
 
+'''
 for N in [100,500,1000,2000,3000]:
         A = Matrix(N,N)
         b = Matrix(N)
-        '''
         #Jacobi method
         start = time.time()
         x = jacobi(A, b, THRESHOLD, MAX_ITERATION)
@@ -65,10 +65,24 @@ for N in [100,500,1000,2000,3000]:
         x = gauss(A, b, THRESHOLD, MAX_ITERATION)
         end = time.time()
         print(f"Gauss time:{end-start}")
-        '''
 
-        # Gauss method
+        # FactLU method
         start = time.time()
         x = factLU(A, b, THRESHOLD, MAX_ITERATION)
         end = time.time()
         print(f"factLU time:{end - start}")
+
+'''
+N_TEST = 100
+A = Matrix(N_TEST,N_TEST)
+b = Matrix(N_TEST)
+
+start = time.time()
+x = factLUCho(A, b, THRESHOLD, MAX_ITERATION)
+end = time.time()
+print(f"factLUCho time:{end - start}")
+
+start = time.time()
+x = factLU(A, b, THRESHOLD, MAX_ITERATION)
+end = time.time()
+print(f"factLU time:{end - start}")

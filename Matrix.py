@@ -129,7 +129,13 @@ class Matrix:
         return mat1*mat2
 
     def copy(self):
-        return Matrix(self.m, self.n, self.mat)
+        matrix = []
+        for m in range(self.m):
+            matrix_temp = []
+            for n in range(self.n):
+                matrix_temp.append(self.mat[m][n])
+            matrix.append(matrix_temp)
+        return Matrix(self.m, self.n, matrix)
 
     def diag(self):
         matrix = []
@@ -181,6 +187,20 @@ class Matrix:
         Matrix.a3 = a3t
 
         return matrix
+
+    def zero(self):
+        a1t = Matrix.a1
+        a2t = Matrix.a2
+        a3t = Matrix.a3
+
+        Matrix.a1 = Matrix.a2 = Matrix.a3 = 0
+        matrix = Matrix(self.m, self.n)
+
+        Matrix.a1 = a1t
+        Matrix.a2 = a2t
+        Matrix.a3 = a3t
+
+        return matrix
     def fact_LU(self):
         U = self.copy()
         L = self.unit()
@@ -192,6 +212,22 @@ class Matrix:
             U = D*U
         return L, U
 
+    def trans(self):
+        M = self.copy()
+        for m in range(self.m):
+            for n in range(self.n):
+                M.mat[m][n] = self.mat[n][m]
+        return M
+
+    def fact_LU_cho(self):
+        L = self.zero()
+        for i in range(L.m):
+            suma=sum(pow(L.mat[i][k],2) for k in range(i))
+            L.mat[i][i] = math.sqrt(self.mat[i][i] - suma)
+            for j in range(i,L.m):
+                suma = sum(L.mat[j][k]*L.mat[i][k] for k in range(i))
+                L.mat[j][i] = (self.mat[j][i] - suma) / L.mat[i][i]
+        return L, L.trans()
 
 
 

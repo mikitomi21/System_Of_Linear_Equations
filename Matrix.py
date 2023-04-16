@@ -171,12 +171,15 @@ class Matrix:
         a1t = Matrix.a1
         a2t = Matrix.a2
         a3t = Matrix.a3
+
         Matrix.a1 = 1
         Matrix.a2 = Matrix.a3 = 0
         matrix = Matrix(self.m, self.n)
+
         Matrix.a1 = a1t
         Matrix.a2 = a2t
         Matrix.a3 = a3t
+
         return matrix
     def fact_LU(self):
         U = self.copy()

@@ -204,12 +204,16 @@ class Matrix:
     def fact_LU(self):
         U = self.copy()
         L = self.unit()
-        for n in range(self.n-1):
-            D = self.unit()
-            for m in range(n+1, U.m):
-                D.mat[m][n] = U.mat[m][n]/(-U.mat[n][n])
-                L.mat[m][n] = -D.mat[m][n]
-            U = D*U
+        for i in range(self.n-1):
+            for j in range(i+1, U.m):
+                if U.mat[i][i] == 0:
+                    U.mat[i+1], U.mat[i] = U.mat[i], U.mat[i+1]
+                if U.mat[i][i] == 0:
+                    L.mat[j][i] = 0
+                else:
+                    L.mat[j][i] = U.mat[j][i]/U.mat[i][i]
+                for k in range(i, U.m):
+                    U.mat[j][k] = U.mat[j][k] - (L.mat[j][i]*U.mat[i][k])
         return L, U
 
     def trans(self):

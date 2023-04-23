@@ -73,10 +73,27 @@ for N in [100,500,1000,2000,3000]:
         print(f"factLU time:{end - start}")
 
 '''
+
+
 N_TEST = 1000
 A = Matrix(N_TEST,N_TEST)
 b = Matrix(N_TEST)
 
 start = time.time()
+x = factLU(A, b, THRESHOLD)
+end = time.time()
+print(end-start)
+
+start = time.time()
 x = factLUCho(A, b, THRESHOLD)
 end = time.time()
+print(end-start)
+
+# test = [[3,-1,1,0],
+#         [1,3,1,1],
+#         [1,1,3,1],
+#         [0,1,1,3]]
+# A = Matrix(4,4,test)
+# b = Matrix(4)
+# x = factLU(A, b, THRESHOLD)
+# print(x)

@@ -12,20 +12,20 @@ MAX_ITERATION=1000
 
 # ------------------------Zadanie B------------------------
 
-# A = Matrix(N,N)
-# b = Matrix(N)
+A = Matrix(N,N)
+b = Matrix(N)
 
-# #Jacobi method
+#Jacobi method
 # start = time.time()
 # x = jacobi(A, b, THRESHOLD, MAX_ITERATION)
 # end = time.time()
 # print(f"Jacobi time:{end-start}")
 
 # #Gauss method
-# start = time.time()
-# x = gauss(A, b, THRESHOLD, MAX_ITERATION)
-# end = time.time()
-# print(f"Gauss time:{end-start}")
+start = time.time()
+x = gauss(A, b, THRESHOLD, MAX_ITERATION)
+end = time.time()
+print(f"Gauss time:{end-start}")
 
 
 
@@ -33,8 +33,8 @@ MAX_ITERATION=1000
 # Matrix.a1 = 3
 # Matrix.a2 = -1
 # Matrix.a3 = -1
-# A = Matrix(N,N)
-# b = Matrix(N)
+# A = Matrix(100,100)
+# b = Matrix(100)
 # x = jacobi(A, b, THRESHOLD, MAX_ITERATION)
 # x = gauss(A, b, THRESHOLD, MAX_ITERATION)
 

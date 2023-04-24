@@ -1,13 +1,16 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 from Matrix import Matrix
 import time
 import copy
 import math
-def jacobi(A, b, threshold=pow(10,-9), max_iter=1000):
+def jacobi(A, b, threshold=pow(10,-9), max_iter=300):
     D = A.diag()
     L = A.tril().minus()
     U = A.triu().minus()
+
+    vec_res = np.zeros(max_iter)
 
     x = Matrix(b.m, 1, [[0] for _ in range(b.m)])
     comp1 = (L + U)
@@ -15,12 +18,29 @@ def jacobi(A, b, threshold=pow(10,-9), max_iter=1000):
         comp2 = comp1*x+b
         x = D.solve2(comp2)
         res = A*x - b
-        print(f"Norma residuum: {res.max()}")
+        vec_res[iteration] = res.max()
+
         if all(abs(res.mat[i][0]) <= threshold for i in range(A.m)):
             print(f"Jacobi iteration: {iteration}")
             #print(f"res={res}")
+            vec_res = vec_res[:iteration]
+            xtest = np.arange(0, iteration, 1)
+            plt.plot(xtest, vec_res)
+            plt.xlabel("Number of iteration")
+            plt.ylabel("Log value of residuum")
+            plt.title("Residuum for Jacobi method")
+            plt.yscale('log')
+            plt.show()
             return x
 
+
+    x_ = np.arange(0, max_iter, 1)
+    plt.plot(x_, vec_res)
+    plt.xlabel("Number of iteration")
+    plt.ylabel("Log value of residuum")
+    plt.title("Residuum for Jacobi method")
+    plt.yscale('log')
+    plt.show()
     print(f"jacobi: {max_iter}")
     return x
 
@@ -28,6 +48,8 @@ def gauss(A, b, threshold=pow(10,-9), max_iter=1000):
     #D = A.diag()
     L = A.tril()
     U = A.triu()
+
+    vec_res = np.zeros(max_iter)
 
     x = Matrix(b.m, 1, [[0] for _ in range(b.m)])
     for iteration in range(max_iter):
@@ -38,13 +60,30 @@ def gauss(A, b, threshold=pow(10,-9), max_iter=1000):
             s2 = m2*x
             x.mat[i][0] = (b.mat[i][0]-s1.mat[0][0]-s2.mat[0][0])/A.mat[i][i]
         res = A * x - b
-        print(f"Norma residuum: {res.max()}")
+
+        vec_res[iteration] = res.max()
 
         if all(abs(res.mat[i][0]) <= threshold for i in range(A.m)):
             #print(f"Gauss iteration: {iteration}")
             #print(f"res={res}")
+            vec_res = vec_res[:iteration]
+            x_ = np.arange(0, iteration, 1)
+            plt.plot(x_, vec_res)
+            plt.xlabel("Number of iteration")
+            plt.ylabel("Log value of residuum")
+            plt.title("Residuum for Gauss method")
+            plt.yscale('log')
+            plt.show()
             return x
 
+    x_ = np.arange(0, max_iter, 1)
+    plt.plot(x_, vec_res)
+    plt.xlabel("Number of iteration")
+    plt.ylabel("Log value of residuum")
+    plt.title("Residuum for Gauss method")
+    plt.yscale('log')
+    plt.show()
+    print(f"jacobi: {max_iter}")
     #print(f"gauss: {max_iter}")
     return x
 

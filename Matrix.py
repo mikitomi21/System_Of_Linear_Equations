@@ -234,5 +234,9 @@ class Matrix:
         return L, L.trans()
 
 
-
-
+    def max(self):
+        maximum = 0
+        for i in range(self.m):
+            if abs(self.mat[i][0]) > maximum:
+                maximum = abs(self.mat[i][0])
+        return maximum
